@@ -1,0 +1,10 @@
+.actionScriptProperties
+.flexProperties
+.flexLibProperties
+.metadata
+.project
+.settings
+.DS_Store
+asdoc
+bin
+bin-debug

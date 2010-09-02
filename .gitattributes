@@ -1,0 +1,2 @@
+*.swf -crlf -diff -merge
+*.swc -crlf -diff -merge
