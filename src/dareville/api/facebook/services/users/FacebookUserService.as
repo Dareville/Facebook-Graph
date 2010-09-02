@@ -232,7 +232,7 @@ function onMusicLoad( vo : FacebookMusicCollectionData ):void
 				loader.addEventListener( Event.COMPLETE, onMusicLoadComplete, false, 0, true );
 				
 				// Call the service
-				call( loader, user_id + "/" + FacebookConstants.CONNECTION_MOVIES, access_token );
+				call( loader, user_id + "/" + FacebookConstants.CONNECTION_MUSIC, access_token );
 				return loader;
 			}
 			return null;
