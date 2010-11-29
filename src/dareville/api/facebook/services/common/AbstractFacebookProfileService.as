@@ -1,8 +1,8 @@
 package dareville.api.facebook.services.common
 {
 	import dareville.api.facebook.FacebookConstants;
-	import dareville.api.facebook.data.feed.FacebookFeedCreatePostData;
 	import dareville.api.facebook.data.feed.FacebookFeedCollectionData;
+	import dareville.api.facebook.data.feed.FacebookFeedCreatePostData;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
@@ -158,7 +158,7 @@ function onProfilePhotoLoad( photo : DisplayObject ) : void
 				
 				// Call the service
 				var path : String = page_id + "/" + FacebookConstants.CONNECTION_PICTURE + "?type=" + type + "&";
-				call( loader, path, access_token );
+				call( loader, path, access_token, null, null, FacebookConstants.API_SECURE_PATH, false );
 				return loader;
 			}
 			return null;
@@ -202,39 +202,25 @@ function onWallPostCreated( id : String ):void
 				
 				var data : URLVariables = new URLVariables();
 				if( post.message )
-				{
 					data.message = post.message;
-				}
 				
 				if( post.picture )
-				{
 					data.picture = post.picture;
-				}
 				
 				if( post.link )
-				{
 					data.link = post.link;
-				}
 				
 				if( post.name ) 
-				{
 					data.name = post.name;
-				}
 				
 				if( post.caption )
-				{
 					data.caption = post.caption;
-				}
 				
 				if( post.description )
-				{
 					data.description = post.description;
-				}
 				
 				if( post.source )
-				{
 					data.source = post.source;
-				}
 				
 				// Call the service
 				var path : String = page_id + "/" + FacebookConstants.CONNECTION_FEED;

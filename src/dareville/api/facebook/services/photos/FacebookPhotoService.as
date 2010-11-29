@@ -84,7 +84,7 @@ function onPhotosLoad( vo : FacebookPhotoCollectionData ):void
 				loader.addEventListener( Event.COMPLETE, onGetPhotosLoadComplete, false, 0, true );
 				
 				// Call the service
-				call( loader, page_id + "/" + FacebookConstants.CONNECTION_PHOTOS, access_token  );
+				call( loader, page_id + "/" + FacebookConstants.CONNECTION_PHOTOS, access_token );
 				return loader;
 			}
 			return null;
