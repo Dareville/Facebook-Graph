@@ -78,13 +78,16 @@ package dareville.api.facebook.services.common
 			api_path : String = FacebookConstants.API_SECURE_PATH,
 			metadata : Boolean = true ) : Boolean
 		{
-			if( access_token )
+			if( access_token != null )
 			{
 				// If no data is provided, create a new instance and assign
 				// access token
 				data = data || new URLVariables();
-				data.access_token = access_token;
 				data.metadata = ( metadata ) ? 1 : 0;
+				if( access_token.length > 1 )
+				{
+					data.access_token = access_token;
+				}
 				
 				// If no method is provided, set to the default GET request method
 				method = method || URLRequestMethod.GET;

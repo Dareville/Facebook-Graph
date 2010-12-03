@@ -8,12 +8,12 @@ package dareville.api.facebook.services.common
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	import flash.utils.ByteArray;
-	import flash.utils.describeType;
 	
 	import org.osflash.signals.Signal;
 
@@ -75,18 +75,14 @@ package dareville.api.facebook.services.common
 		 */	
 		public function getProfile( access_token : String, page_id : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onProfileLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onProfileLoadComplete );				
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onProfileLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onProfileLoadComplete );				
 				
-				// Call the service
-				call( loader, page_id, access_token );
-				return loader;
-			}
-			return null;
+			// Call the service
+			call( loader, page_id, access_token );
+			return loader;
 		}
 		
 		/**
@@ -104,18 +100,14 @@ package dareville.api.facebook.services.common
 		 */
 		public function getFeed( access_token : String, page_id : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onFeedLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onFeedLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, page_id + "/" + FacebookConstants.CONNECTION_FEED, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onFeedLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onFeedLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, page_id + "/" + FacebookConstants.CONNECTION_FEED, access_token );
+			return loader;
 		}
 		
 		/**
@@ -149,19 +141,16 @@ function onProfilePhotoLoad( photo : DisplayObject ) : void
 			page_id : String,
 			type : String = FacebookConstants.SIZE_SQUARE ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.BINARY;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onProfilePictureLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onProfilePictureLoadComplete, false, 0, true );
-				
-				// Call the service
-				var path : String = page_id + "/" + FacebookConstants.CONNECTION_PICTURE + "?type=" + type + "&";
-				call( loader, path, access_token, null, null, FacebookConstants.API_SECURE_PATH, false );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.BINARY;
+			loader.addEventListener( SecurityErrorEvent.SECURITY_ERROR, onProfilePictureSecurityError, false, 0, true );
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onProfilePictureLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onProfilePictureLoadComplete, false, 0, true );
+			
+			// Call the service
+			var path : String = page_id + "/" + FacebookConstants.CONNECTION_PICTURE + "?type=" + type + "&";
+			call( loader, path, access_token, null, null, FacebookConstants.API_SECURE_PATH, false );
+			return loader;
 		}
 		
 		/**
@@ -364,6 +353,7 @@ function onWallPostCreated( id : String ):void
 		{
 			// Get the loader and remove any event listeners first
 			var url_loader : URLLoader = event.target as URLLoader;
+			url_loader.removeEventListener( SecurityErrorEvent.SECURITY_ERROR, onProfilePictureSecurityError );
 			url_loader.removeEventListener( IOErrorEvent.IO_ERROR, onProfilePictureLoadIOError );
 			url_loader.removeEventListener( Event.COMPLETE, onProfilePictureLoadComplete );
 			
@@ -399,6 +389,27 @@ function onWallPostCreated( id : String ):void
 		{
 			// Rmove event listeners
 			var loader : URLLoader = event.target as URLLoader;
+			loader.removeEventListener( SecurityErrorEvent.SECURITY_ERROR, onProfilePictureSecurityError );
+			loader.removeEventListener( IOErrorEvent.IO_ERROR, onProfilePictureLoadIOError );
+			loader.removeEventListener( Event.COMPLETE, onProfilePictureLoadComplete );
+			
+			errored.dispatch( event.text );
+			
+			// NULL the loader
+			loader = null;
+		}
+		
+		/**
+		 * @private
+		 * Callback for when the profile picture load security errors
+		 * 
+		 * @param event <code>SecurityErrorEvent.SECURITY_ERROR</code> 
+		 */	
+		protected function onProfilePictureSecurityError( event : SecurityErrorEvent ):void	
+		{
+			// Rmove event listeners
+			var loader : URLLoader = event.target as URLLoader;
+			loader.removeEventListener( SecurityErrorEvent.SECURITY_ERROR, onProfilePictureSecurityError );
 			loader.removeEventListener( IOErrorEvent.IO_ERROR, onProfilePictureLoadIOError );
 			loader.removeEventListener( Event.COMPLETE, onProfilePictureLoadComplete );
 			
