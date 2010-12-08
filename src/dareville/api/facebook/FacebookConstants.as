@@ -206,6 +206,25 @@ package dareville.api.facebook
 		public static const SEARCH_TYPE_USER		:String = "user";
 		
 		//----------------------------------
+		//  Albums
+		//----------------------------------
+		
+		/**
+		 * Constant for the album type "profile"
+		 */		
+		public static const ALBUM_TYPE_PROFILE		:String = "profile";
+		
+		/**
+		 * Constant for the album type "mobile"
+		 */		
+		public static const ALBUM_TYPE_MOBILE		:String = "mobile";
+		
+		/**
+		 * Constant for the album type "normal"
+		 */		
+		public static const ALBUM_TYPE_NORMAL		:String = "normal";
+		
+		//----------------------------------
 		//  Profile photo sizes
 		//----------------------------------
 		

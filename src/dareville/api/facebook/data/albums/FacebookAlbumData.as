@@ -118,11 +118,24 @@ package dareville.api.facebook.data.albums
 		}
 		
 		/**
+		 * Album type. Valid options are:
+		 * <code>FacebookConstants.ALBUM_TYPE_PROFILE</code>
+		 * <code>FacebookConstants.ALBUM_TYPE_MOBILE</code>
+		 * <code>FacebookConstants.ALBUM_TYPE_NORMAL</code>
+		 * 
+		 * @return String 
+		 */		
+		public function get type():String
+		{
+			return data.type;
+		}
+		
+		/**
 		 * Number of photos in the album
 		 * 
 		 * @return String 
 		 */		
-		private function get count():Number
+		public function get count():Number
 		{
 			return data.count;
 		}
