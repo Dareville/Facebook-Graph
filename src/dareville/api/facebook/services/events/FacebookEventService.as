@@ -105,18 +105,14 @@ function onEventsLoaded( vo : FacebookEventCollectionData ):void
 			access_token : String,
 			page_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onEventsLoadIOError );
-				loader.addEventListener( Event.COMPLETE, onEventsLoadComplete );
-				
-				// Call the service
-				call( loader, page_id + "/" + FacebookConstants.CONNECTION_EVENTS, access_token  );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onEventsLoadIOError );
+			loader.addEventListener( Event.COMPLETE, onEventsLoadComplete );
+			
+			// Call the service
+			call( loader, page_id + "/" + FacebookConstants.CONNECTION_EVENTS, access_token  );
+			return loader;
 		}
 		
 		/**
@@ -147,18 +143,14 @@ function onEventLoaded( vo : FacebookEventData ):void
 			access_token : String,
 			event_id : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onEventLoadIOError );
-				loader.addEventListener( Event.COMPLETE, onEventLoadComplete );
-				
-				// Call the service
-				call( loader, event_id, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onEventLoadIOError );
+			loader.addEventListener( Event.COMPLETE, onEventLoadComplete );
+			
+			// Call the service
+			call( loader, event_id, access_token );
+			return loader;
 		}
 		
 		/**
@@ -348,18 +340,14 @@ function onStatusLoaded( vo : FacebookIdentificationCollectionData ):void
 			event_id : String, 
 			status : String = FacebookConstants.EVENT_STATUS_ATTENDING ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onEventStatusLoadIOError );
-				loader.addEventListener( Event.COMPLETE, onEventStatusLoadComplete );
-				
-				// Call the service
-				call( loader, event_id + "/" + status, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onEventStatusLoadIOError );
+			loader.addEventListener( Event.COMPLETE, onEventStatusLoadComplete );
+			
+			// Call the service
+			call( loader, event_id + "/" + status, access_token );
+			return loader;
 		}
 		
 		/**

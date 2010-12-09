@@ -74,18 +74,14 @@ function onCommentsLoaded( vo : FacebookCommentCollectionData ):void
 		 */		
 		public function getComments( access_token : String, post_id : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onCommentsLoadIOError );
-				loader.addEventListener( Event.COMPLETE, onCommentsLoadComplete );
-				
-				// Call the service
-				call( loader, post_id + "/" + FacebookConstants.CONNECTION_COMMENTS, access_token  );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onCommentsLoadIOError );
+			loader.addEventListener( Event.COMPLETE, onCommentsLoadComplete );
+			
+			// Call the service
+			call( loader, post_id + "/" + FacebookConstants.CONNECTION_COMMENTS, access_token  );
+			return loader;
 		}
 		
 		/**
@@ -117,22 +113,18 @@ function onCommentPosted( id : String ):void
 			post_id : String, 
 			message : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onCommentPostIOError );
-				loader.addEventListener( Event.COMPLETE, onCommentPostComplete );
-				
-				var data : URLVariables = new URLVariables();
-				data.message = message;
-				
-				// Call the service
-				var path : String = post_id + "/" + FacebookConstants.CONNECTION_COMMENTS;
-				call( loader, path, access_token, data, URLRequestMethod.POST );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onCommentPostIOError );
+			loader.addEventListener( Event.COMPLETE, onCommentPostComplete );
+			
+			var data : URLVariables = new URLVariables();
+			data.message = message;
+			
+			// Call the service
+			var path : String = post_id + "/" + FacebookConstants.CONNECTION_COMMENTS;
+			call( loader, path, access_token, data, URLRequestMethod.POST );
+			return loader;
 		}
 		
 		//---------------------------------------------------------------------

@@ -13,7 +13,7 @@ package dareville.api.facebook.services.photos
 	import org.osflash.signals.Signal;
 	
 	import ru.inspirit.net.MultipartURLLoader;
-
+	
 	/**
 	 * The <code>FacebookPhotoService</code> class provides access to photo
 	 * data.
@@ -62,32 +62,28 @@ package dareville.api.facebook.services.photos
 		 * 
 		 * @example This example retrieves the photos of the current logged 
 		 * in user:
-<listing version="3.0">
-var service : FacebookPhotoService = new FacebookPhotoService();
-service.photosLoaded.addOnce( onPhotosLoad );
-service.getPhotos( access_token );
- 
-function onPhotosLoad( vo : FacebookPhotoCollectionData ):void
-{
-	service.photosLoaded.removeAll();
-}</listing>
+		 <listing version="3.0">
+		 var service : FacebookPhotoService = new FacebookPhotoService();
+		 service.photosLoaded.addOnce( onPhotosLoad );
+		 service.getPhotos( access_token );
+		 
+		 function onPhotosLoad( vo : FacebookPhotoCollectionData ):void
+		 {
+		 service.photosLoaded.removeAll();
+		 }</listing>
 		 */ 	
 		public function getPhotos( 
 			access_token : String, 
 			page_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onGetPhotosLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onGetPhotosLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, page_id + "/" + FacebookConstants.CONNECTION_PHOTOS, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onGetPhotosLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onGetPhotosLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, page_id + "/" + FacebookConstants.CONNECTION_PHOTOS, access_token );
+			return loader;
 		}
 		
 		/**
@@ -104,22 +100,22 @@ function onPhotosLoad( vo : FacebookPhotoCollectionData ):void
 		 * 
 		 * @example This example posts a screen capture of the stage with a 
 		 * photo caption:
-<listing version="3.0">
-var bmd : BitmapData = new BitmapData( 300, 500 );
-bmd.draw( this );
- 
-var jpg : JPGEncoder = new JPGEncoder( 85 );
-var source : ByteArray = jpg.encode( bmd );
- 
-var photo : FacebookPhotoCreateData = new FacebookPhotoCreateData( "Photo caption", source );
-var service : FacebookPhotoService = new FacebookPhotoService();
-service.photoCreated.addOnce( onPhotoCreated );
-service.createPhoto( access_token, photo );
- 
-function onPhotoCreated( id : String ):void
-{
-	service.photoCreated.removeAll();
-}</listing>
+		 <listing version="3.0">
+		 var bmd : BitmapData = new BitmapData( 300, 500 );
+		 bmd.draw( this );
+		 
+		 var jpg : JPGEncoder = new JPGEncoder( 85 );
+		 var source : ByteArray = jpg.encode( bmd );
+		 
+		 var photo : FacebookPhotoCreateData = new FacebookPhotoCreateData( "Photo caption", source );
+		 var service : FacebookPhotoService = new FacebookPhotoService();
+		 service.photoCreated.addOnce( onPhotoCreated );
+		 service.createPhoto( access_token, photo );
+		 
+		 function onPhotoCreated( id : String ):void
+		 {
+		 service.photoCreated.removeAll();
+		 }</listing>
 		 */ 
 		public function createPhoto(
 			access_token : String,

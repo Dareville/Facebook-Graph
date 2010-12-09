@@ -103,32 +103,28 @@ function onPostsSearched( vo : FacebookFeedCollectionData ):void
 			query : String,
 			page_id : String = null ) : URLLoader
 		{
-			if( access_token )
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchPostsIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onSearchPostsComplete, false, 0, true );
+			
+			var data : URLVariables = new URLVariables();
+			data.q = query;
+			
+			var page : String;
+			if( page_id )
 			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchPostsIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onSearchPostsComplete, false, 0, true );
-				
-				var data : URLVariables = new URLVariables();
-				data.q = query;
-				
-				var page : String;
-				if( page_id )
-				{
-					page = page_id;
-				}
-				else
-				{
-					page = FacebookConstants.SEARCH;
-					data.type = FacebookConstants.SEARCH_TYPE_POST;
-				}
-				
-				// Call the service
-				call( loader, page, access_token, data );
-				return loader;
+				page = page_id;
 			}
-			return null;
+			else
+			{
+				page = FacebookConstants.SEARCH;
+				data.type = FacebookConstants.SEARCH_TYPE_POST;
+			}
+			
+			// Call the service
+			call( loader, page, access_token, data );
+			return loader;
 		}
 		
 		/**
@@ -156,24 +152,20 @@ function onUsersSearched( vo : FacebookSearchUserCollectionData ):void
 		 */		
 		public function searchUsers( access_token : String, query : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchUsersIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onSearchUsersComplete, false, 0, true );
-				
-				var data : URLVariables = new URLVariables();
-				data.q = query;
-				data.type = FacebookConstants.SEARCH_TYPE_USER;
-				
-				var page : String = page = FacebookConstants.SEARCH;
-				
-				// Call the service
-				call( loader, page, access_token, data );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchUsersIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onSearchUsersComplete, false, 0, true );
+			
+			var data : URLVariables = new URLVariables();
+			data.q = query;
+			data.type = FacebookConstants.SEARCH_TYPE_USER;
+			
+			var page : String = page = FacebookConstants.SEARCH;
+			
+			// Call the service
+			call( loader, page, access_token, data );
+			return loader;
 		}
 		
 		/**
@@ -207,24 +199,20 @@ function onPagesSearched( vo : FacebookSearchPageCollectionData ):void
 			access_token : String, 
 			query : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchPagesIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onSearchPagesComplete, false, 0, true );
-				
-				var data : URLVariables = new URLVariables();
-				data.q = query;
-				data.type = FacebookConstants.SEARCH_TYPE_PAGE;
-				
-				var page : String = page = FacebookConstants.SEARCH;
-				
-				// Call the service
-				call( loader, page, access_token, data );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchPagesIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onSearchPagesComplete, false, 0, true );
+			
+			var data : URLVariables = new URLVariables();
+			data.q = query;
+			data.type = FacebookConstants.SEARCH_TYPE_PAGE;
+			
+			var page : String = page = FacebookConstants.SEARCH;
+			
+			// Call the service
+			call( loader, page, access_token, data );
+			return loader;
 		}
 		
 		/**
@@ -259,24 +247,20 @@ function onEventsSearched( vo : FacebookEventCollectionData ):void
 			access_token : String, 
 			query : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchEventsIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onSearchEventsComplete, false, 0, true );
-				
-				var data : URLVariables = new URLVariables();
-				data.q = query;
-				data.type = FacebookConstants.SEARCH_TYPE_EVENT;
-				
-				var page : String = page = FacebookConstants.SEARCH;
-				
-				// Call the service
-				call( loader, page, access_token, data );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchEventsIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onSearchEventsComplete, false, 0, true );
+			
+			var data : URLVariables = new URLVariables();
+			data.q = query;
+			data.type = FacebookConstants.SEARCH_TYPE_EVENT;
+			
+			var page : String = page = FacebookConstants.SEARCH;
+			
+			// Call the service
+			call( loader, page, access_token, data );
+			return loader;
 		}
 		
 		/**
@@ -310,24 +294,20 @@ function onGroupsSearched( vo : FacebookSearchGroupCollectionData ):void
 			access_token : String, 
 			query : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchGroupsIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onSearchGroupsComplete, false, 0, true );
-				
-				var data : URLVariables = new URLVariables();
-				data.q = query;
-				data.type = FacebookConstants.SEARCH_TYPE_GROUP;
-				
-				var page : String = page = FacebookConstants.SEARCH;
-				
-				// Call the service
-				call( loader, page, access_token, data );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchGroupsIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onSearchGroupsComplete, false, 0, true );
+			
+			var data : URLVariables = new URLVariables();
+			data.q = query;
+			data.type = FacebookConstants.SEARCH_TYPE_GROUP;
+			
+			var page : String = page = FacebookConstants.SEARCH;
+			
+			// Call the service
+			call( loader, page, access_token, data );
+			return loader;
 		}
 		
 		/**
@@ -360,21 +340,17 @@ function onPageSearched( vo : FacebookFeedCollectionData ):void
 			query : String ,
 			page_id : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchPageIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onSearchPageComplete, false, 0, true );
-				
-				var data : URLVariables = new URLVariables();
-				data.q = query;
-				
-				// Call the service
-				call( loader, page_id, access_token, data );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onSearchPageIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onSearchPageComplete, false, 0, true );
+			
+			var data : URLVariables = new URLVariables();
+			data.q = query;
+			
+			// Call the service
+			call( loader, page_id, access_token, data );
+			return loader;
 		}
 		
 		//---------------------------------------------------------------------

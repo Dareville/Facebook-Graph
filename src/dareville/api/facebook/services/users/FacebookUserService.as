@@ -140,18 +140,14 @@ function onFriendsLoad( vo : FacebookIdentificationCollectionData ):void
 			access_token : String, 
 			user_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onFriendsLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onFriendsLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, user_id + "/" + FacebookConstants.CONNECTION_FRIENDS, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onFriendsLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onFriendsLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, user_id + "/" + FacebookConstants.CONNECTION_FRIENDS, access_token );
+			return loader;
 		}
 		
 		/**
@@ -182,18 +178,14 @@ function onMoviesLoad( vo : FacebookMovieCollectionData ):void
 			access_token : String, 
 			user_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onMoviesLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onMoviesLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, user_id + "/" + FacebookConstants.CONNECTION_MOVIES, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onMoviesLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onMoviesLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, user_id + "/" + FacebookConstants.CONNECTION_MOVIES, access_token );
+			return loader;
 		}
 		
 		/**
@@ -224,18 +216,14 @@ function onMusicLoad( vo : FacebookMusicCollectionData ):void
 			access_token : String, 
 			user_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onMusicLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onMusicLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, user_id + "/" + FacebookConstants.CONNECTION_MUSIC, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onMusicLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onMusicLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, user_id + "/" + FacebookConstants.CONNECTION_MUSIC, access_token );
+			return loader;
 		}
 		
 		/**
@@ -266,18 +254,14 @@ function onBooksLoad( vo : FacebookBookCollectionData ):void
 			access_token : String, 
 			user_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onBooksLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onBooksLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, user_id + "/" + FacebookConstants.CONNECTION_BOOKS, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onBooksLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onBooksLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, user_id + "/" + FacebookConstants.CONNECTION_BOOKS, access_token );
+			return loader;
 		}
 		
 		//----------------------------------

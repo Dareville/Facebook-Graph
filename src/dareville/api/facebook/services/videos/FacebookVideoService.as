@@ -74,18 +74,14 @@ function onVideosLoad( vo : FacebookVideoCollectionData ):void
 			access_token : String, 
 			page_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onGetVideosLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onGetVideosLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, page_id + "/" + FacebookConstants.CONNECTION_VIDEOS, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onGetVideosLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onGetVideosLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, page_id + "/" + FacebookConstants.CONNECTION_VIDEOS, access_token );
+			return loader;
 		}
 		
 		/**
@@ -114,18 +110,14 @@ function onVideoLoad( vo : FacebookVideoData ):void
 			access_token : String, 
 			video_id : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onGetVideoLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onGetVideoLoadComplete, false, 0, true );
-				
-				// Call the service
-				call( loader, video_id, access_token );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onGetVideoLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onGetVideoLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, video_id, access_token );
+			return loader;
 		}
 		
 		//---------------------------------------------------------------------

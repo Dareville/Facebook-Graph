@@ -90,18 +90,14 @@ function onAlbumsLoaded( vo : FacebookAlbumCollectionData ):void
 			access_token : String, 
 			page_id : String = FacebookConstants.CONNECTION_ME ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onAlbumsLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onAlbumsLoadComplete, false, 0, true );
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onAlbumsLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onAlbumsLoadComplete, false, 0, true );
 				
-				// Call the service
-				call( loader, page_id + "/" + FacebookConstants.CONNECTION_ALBUMS, access_token  );
-				return loader;
-			}
-			return null;
+			// Call the service
+			call( loader, page_id + "/" + FacebookConstants.CONNECTION_ALBUMS, access_token  );
+			return loader;
 		}
 		
 		/**
@@ -137,18 +133,14 @@ function onAlbumLoaded( vo : FacebookAlbumData ):void
 			access_token : String, 
 			album_id : String ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onAlbumLoadIOError, false, 0, true );
-				loader.addEventListener( Event.COMPLETE, onAlbumLoadComplete, false, 0, true );
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onAlbumLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onAlbumLoadComplete, false, 0, true );
 				
-				// Call the service
-				call( loader, album_id, access_token  );
-				return loader;
-			}
-			return null;
+			// Call the service
+			call( loader, album_id, access_token  );
+			return loader;
 		}
 		
 		/**
@@ -177,22 +169,18 @@ function onAlbumCreated( id : String ):void
 			access_token : String, 
 			album : FacebookAlbumCreateData ) : URLLoader
 		{
-			if( access_token )
-			{
-				var loader : URLLoader = new URLLoader();
-				loader.dataFormat = URLLoaderDataFormat.TEXT;
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onCreateAlbumIOError );
-				loader.addEventListener( Event.COMPLETE, onCreateAlbumLoadComplete );
-				
-				var data : URLVariables = new URLVariables();
-				data.name = album.name;
-				data.description = album.description;
-				
-				// Call the service
-				call( loader, FacebookConstants.CONNECTION_ME + "/" + FacebookConstants.CONNECTION_ALBUMS, access_token, data, URLRequestMethod.POST );
-				return loader;
-			}
-			return null;
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onCreateAlbumIOError );
+			loader.addEventListener( Event.COMPLETE, onCreateAlbumLoadComplete );
+			
+			var data : URLVariables = new URLVariables();
+			data.name = album.name;
+			data.description = album.description;
+			
+			// Call the service
+			call( loader, FacebookConstants.CONNECTION_ME + "/" + FacebookConstants.CONNECTION_ALBUMS, access_token, data, URLRequestMethod.POST );
+			return loader;
 		}
 		
 		//---------------------------------------------------------------------
