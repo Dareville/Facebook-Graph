@@ -117,13 +117,12 @@ package dareville.api.facebook.services.common
 		 * Signal is dispatched containing an <code>DisplayObject</code> 
 		 * instance.</p>
 		 * 
-		 * <p>Currently, the request will fail if the user does not have a 
-		 * profile image. A <code>SecurityErrorEvent.SECURITY_ERROR</code> is 
-		 * dispatched from Facebook due to there not existing a crossdomain.xml 
-		 * file on their server. For now, listen for the 
-		 * <code>errored</code> signal, check the errored string value, and 
-		 * handle it in a case by case basis until a more permanent fix is 
-		 * updated.</p>
+		 * <p>If a SecurityErrorEvent is returned from Facebook (aka. the 
+		 * default Facebook profile photo is being loaded), a 
+		 * <code>profilePhotoLoaded</code> Signal is now dispatched instead with 
+		 * a null DisplayObject as its parameter. Facebook will hopefully put 
+		 * the default profile photo image on a server with crossdomain access 
+		 * as this is just a temporary fix.</p>
 		 * 
 		 * @param access_token Facebook access token
 		 * @param page_id String value of the page ID
