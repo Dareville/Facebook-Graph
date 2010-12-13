@@ -117,6 +117,14 @@ package dareville.api.facebook.services.common
 		 * Signal is dispatched containing an <code>DisplayObject</code> 
 		 * instance.</p>
 		 * 
+		 * <p>Currently, the request will fail if the user does not have a 
+		 * profile image. A <code>SecurityErrorEvent.SECURITY_ERROR</code> is 
+		 * dispatched from Facebook due to there not existing a crossdomain.xml 
+		 * file on their server. For now, listen for the 
+		 * <code>errored</code> signal, check the errored string value, and 
+		 * handle it in a case by case basis until a more permanent fix is 
+		 * updated.</p>
+		 * 
 		 * @param access_token Facebook access token
 		 * @param page_id String value of the page ID
 		 * @param type Size of the image returned
@@ -413,7 +421,11 @@ function onWallPostCreated( id : String ):void
 			loader.removeEventListener( IOErrorEvent.IO_ERROR, onProfilePictureLoadIOError );
 			loader.removeEventListener( Event.COMPLETE, onProfilePictureLoadComplete );
 			
-			errored.dispatch( event.text );
+			// Dispatch signal of but without a display object
+			// Note: 2010/12/13 - This is due to Facebook not having a 
+			// crossdomain.xml file on the server that allows unapproved 
+			// FB hosts.
+			profilePhotoLoaded.dispatch( null );
 			
 			// NULL the loader
 			loader = null;
