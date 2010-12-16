@@ -10,6 +10,7 @@ package dareville.api.facebook.services.photos
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	import ru.inspirit.net.MultipartURLLoader;
@@ -34,13 +35,13 @@ package dareville.api.facebook.services.photos
 		 * Signal dispatched when the photos call has loaded. Dispatches a
 		 * <code>FacebookPhotoCollectionData</code> as a parameter. 
 		 */		
-		public var photosLoaded : Signal = new Signal( FacebookPhotoCollectionData );
+		public var photosLoaded : ISignalOwner = new Signal( FacebookPhotoCollectionData );
 		
 		/**
 		 * Signal dispatched when the photo created call has completed. 
 		 * Dispatches a <code>String</code> as a parameter. 
 		 */		
-		public var photoCreated : Signal = new Signal( String );
+		public var photoCreated : ISignalOwner = new Signal( String );
 		
 		//---------------------------------------------------------------------
 		//

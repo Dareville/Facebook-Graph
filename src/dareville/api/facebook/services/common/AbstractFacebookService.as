@@ -12,6 +12,7 @@ package dareville.api.facebook.services.common
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -34,13 +35,13 @@ package dareville.api.facebook.services.common
 		 * Signal dispatched when a service has errored. Dispatches a
 		 * <code>String</code> as a parameter.
 		 */		
-		public var errored : Signal = new Signal( String );
+		public var errored : ISignalOwner = new Signal( String );
 		
 		/**
 		 * Signal dispatched when a service has deleted an item. Dispatches a
 		 * <code>Boolean</code> as a parameter.
 		 */		
-		public var deleted : Signal = new Signal( Boolean );
+		public var deleted : ISignalOwner = new Signal( Boolean );
 		
 		//---------------------------------------------------------------------
 		//

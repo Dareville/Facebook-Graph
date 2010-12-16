@@ -1,7 +1,6 @@
 package dareville.api.facebook.services.likes
 {
 	import dareville.api.facebook.FacebookConstants;
-	import dareville.api.facebook.data.comments.FacebookCommentCollectionData;
 	import dareville.api.facebook.services.common.AbstractFacebookService;
 	
 	import flash.events.Event;
@@ -10,6 +9,7 @@ package dareville.api.facebook.services.likes
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequestMethod;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -32,13 +32,13 @@ package dareville.api.facebook.services.likes
 		 * Signal dispatched when the like has completed. Dispatches a
 		 * <code>Boolean</code> as a parameter.
 		 */	
-		public var liked : Signal = new Signal( Boolean );
+		public var liked : ISignalOwner = new Signal( Boolean );
 		
 		/**
 		 * Signal dispatched when the unlike has completed. Dispatches a
 		 * <code>Boolean</code> as a parameter.
 		 */	
-		public var unliked : Signal = new Signal( Boolean );
+		public var unliked : ISignalOwner = new Signal( Boolean );
 		
 		//---------------------------------------------------------------------
 		//

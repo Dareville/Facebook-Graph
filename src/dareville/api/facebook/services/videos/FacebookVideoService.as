@@ -10,6 +10,7 @@ package dareville.api.facebook.services.videos
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 
 	/**
@@ -32,13 +33,13 @@ package dareville.api.facebook.services.videos
 		 * Signal dispatched when the videos call has loaded. Dispatches a
 		 * <code>FacebookVideoCollectionData</code> as a parameter.
 		 */		
-		public var videosLoaded : Signal = new Signal( FacebookVideoCollectionData );
+		public var videosLoaded : ISignalOwner = new Signal( FacebookVideoCollectionData );
 		
 		/**
 		 * Signal dispatched when the video call has loaded. Dispatches a
 		 * <code>FacebookVideoData</code> as a parameter.
 		 */		
-		public var videoLoaded : Signal = new Signal( FacebookVideoData );
+		public var videoLoaded : ISignalOwner = new Signal( FacebookVideoData );
 		
 		//---------------------------------------------------------------------
 		//

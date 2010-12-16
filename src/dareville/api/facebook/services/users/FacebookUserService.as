@@ -14,6 +14,7 @@ package dareville.api.facebook.services.users
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -36,31 +37,31 @@ package dareville.api.facebook.services.users
 		 * Signal dispatched when the logged in users news feed has loaded. 
 		 * Dispatches a <code>FacebookFeedCollectionData</code> as a parameter.  
 		 */	
-		public var newsFeedLoaded : Signal = new Signal( FacebookFeedCollectionData );
+		public var newsFeedLoaded : ISignalOwner = new Signal( FacebookFeedCollectionData );
 		
 		/**
 		 * Signal dispatched when a users friends data has loaded. Dispatches a
 		 * <code>FacebookIdentificationCollectionData</code> as a parameter. 
 		 */	
-		public var friendsLoaded : Signal = new Signal( FacebookIdentificationCollectionData );
+		public var friendsLoaded : ISignalOwner = new Signal( FacebookIdentificationCollectionData );
 		
 		/**
 		 * Signal dispatched when a users movies data has loaded. Dispatches a
 		 * <code>FacebookMovieCollectionData</code> as a parameter. 
 		 */	
-		public var moviesLoaded : Signal = new Signal( FacebookMovieCollectionData );
+		public var moviesLoaded : ISignalOwner = new Signal( FacebookMovieCollectionData );
 		
 		/**
 		 * Signal dispatched when a users music data has loaded. Dispatches a
 		 * <code>FacebookMusicCollectionData</code> as a parameter. 
 		 */	
-		public var musicLoaded : Signal = new Signal( FacebookMusicCollectionData );
+		public var musicLoaded : ISignalOwner = new Signal( FacebookMusicCollectionData );
 		
 		/**
 		 * Signal dispatched when a users books data has loaded. Dispatches a
 		 * <code>FacebookBookCollectionData</code> as a parameter. 
 		 */	
-		public var booksLoaded : Signal = new Signal( FacebookBookCollectionData );
+		public var booksLoaded : ISignalOwner = new Signal( FacebookBookCollectionData );
 		
 		//---------------------------------------------------------------------
 		//
@@ -313,7 +314,7 @@ function onProfileLoad( vo : FacebookUserData ):void
 		/**
 		 * @private
 		 */	
-		override protected function getProfileLoadedSignal():Signal
+		override protected function getProfileLoadedSignal():ISignalOwner
 		{
 			return new Signal( FacebookUserData );
 		}

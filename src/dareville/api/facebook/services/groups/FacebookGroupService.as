@@ -7,6 +7,7 @@ package dareville.api.facebook.services.groups
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -73,7 +74,7 @@ function onProfileSearched( vo : FacebookGroupData ):void
 		/**
 		 * @private
 		 */		
-		override protected function getProfileLoadedSignal():Signal
+		override protected function getProfileLoadedSignal():ISignalOwner
 		{
 			return new Signal( FacebookGroupData );
 		}

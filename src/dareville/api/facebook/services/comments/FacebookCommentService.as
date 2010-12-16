@@ -4,7 +4,6 @@ package dareville.api.facebook.services.comments
 	import dareville.api.facebook.data.comments.FacebookCommentCollectionData;
 	import dareville.api.facebook.services.common.AbstractFacebookService;
 	
-	import flash.errors.IOError;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
@@ -12,6 +11,7 @@ package dareville.api.facebook.services.comments
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -34,13 +34,13 @@ package dareville.api.facebook.services.comments
 		 * Signal dispatched once the comments call has loaded. Dispatches a
 		 * <code>FacebookCommentCollectionData</code> as a parameter.
 		 */		
-		public var commentsLoaded : Signal = new Signal( FacebookCommentCollectionData );
+		public var commentsLoaded : ISignalOwner = new Signal( FacebookCommentCollectionData );
 		
 		/**
 		 * Signal dispatched once a new comment has posted. Dispatches a
 		 * <code>String</code> as a parameter.
 		 */		
-		public var commentPosted : Signal = new Signal( String );
+		public var commentPosted : ISignalOwner = new Signal( String );
 		
 		//---------------------------------------------------------------------
 		//

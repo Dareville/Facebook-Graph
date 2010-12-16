@@ -15,6 +15,7 @@ package dareville.api.facebook.services.events
 	import flash.net.URLVariables;
 	
 	import org.casalib.util.DateUtil;
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -37,38 +38,38 @@ package dareville.api.facebook.services.events
 		 * Signal dispatched once the events call has loaded. Dispatches a
 		 * <code>FacebookEventCollectionData</code> as a parameter.
 		 */		
-		public var eventsLoaded : Signal = new Signal( FacebookEventCollectionData );
+		public var eventsLoaded : ISignalOwner = new Signal( FacebookEventCollectionData );
 		
 		/**
 		 * Signal dispatched once the event call has loaded. Dispatches a
 		 * <code>FacebookEventData</code> as a parameter.
 		 */		
-		public var eventLoaded : Signal = new Signal( FacebookEventData );
+		public var eventLoaded : ISignalOwner = new Signal( FacebookEventData );
 		
 		/**
 		 * Signal dispatched once the create event call has completed. 
 		 * Dispatches a <code>String</code> as a parameter.
 		 */		
-		public var eventCreated : Signal = new Signal( String );
+		public var eventCreated : ISignalOwner = new Signal( String );
 		
 		/**
 		 * Signal dispatched once the modify event call has completed. 
 		 * Dispatches a <code>Boolean</code> as a parameter.
 		 */		
-		public var eventModified : Signal = new Signal( Boolean );
+		public var eventModified : ISignalOwner = new Signal( Boolean );
 		
 		/**
 		 * Signal dispatched once the status event load call has completed. 
 		 * Dispatches a <code>FacebookIdentificationCollectionData</code> as 
 		 * a parameter.
 		 */		
-		public var statusLoaded : Signal = new Signal( FacebookIdentificationCollectionData );
+		public var statusLoaded : ISignalOwner = new Signal( FacebookIdentificationCollectionData );
 		
 		/**
 		 * Signal dispatched once the update status event call has completed. 
 		 * Dispatches a <code>Boolean</code> as a parameter.
 		 */		
-		public var statusUpdated : Signal = new Signal( Boolean );
+		public var statusUpdated : ISignalOwner = new Signal( Boolean );
 		
 		//---------------------------------------------------------------------
 		//

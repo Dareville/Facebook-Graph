@@ -12,8 +12,7 @@ package dareville.api.facebook.services.notes
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
-	import mx.messaging.AbstractConsumer;
-	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -35,13 +34,13 @@ package dareville.api.facebook.services.notes
 		 * Signal dispatched when the load notes has completed. Dispatches a
 		 * <code>FacebookNoteCollectionData</code> as a parameter. 
 		 */		
-		public var notesLoaded : Signal = new Signal( FacebookNoteCollectionData );
+		public var notesLoaded : ISignalOwner = new Signal( FacebookNoteCollectionData );
 		
 		/**
 		 * Signal dispatched when a note is created. Dispatches a
 		 * <code>String</code> as a parameter.
 		 */		
-		public var noteCreated : Signal = new Signal( String );
+		public var noteCreated : ISignalOwner = new Signal( String );
 		
 		//---------------------------------------------------------------------
 		//

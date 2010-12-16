@@ -14,6 +14,7 @@ package dareville.api.facebook.services.search
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLVariables;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -36,37 +37,37 @@ package dareville.api.facebook.services.search
 		 * Signal dispatched when the posts search call has loaded. Dispatches a
 		 * <code>FacebookFeedCollectionData</code> as a parameter. 
 		 */		
-		public var postsSearched : Signal = new Signal( FacebookFeedCollectionData );
+		public var postsSearched : ISignalOwner = new Signal( FacebookFeedCollectionData );
 		
 		/**
 		 * Signal dispatched when the users search call has loaded. Dispatches a
 		 * <code>FacebookSearchUserCollectionData</code> as a parameter. 
 		 */		
-		public var usersSearched : Signal = new Signal( FacebookSearchUserCollectionData );
+		public var usersSearched : ISignalOwner = new Signal( FacebookSearchUserCollectionData );
 		
 		/**
 		 * Signal dispatched when the pages search call has loaded. Dispatches a
 		 * <code>FacebookSearchPageCollectionData</code> as a parameter. 
 		 */		
-		public var pagesSearched : Signal = new Signal( FacebookSearchPageCollectionData );
+		public var pagesSearched : ISignalOwner = new Signal( FacebookSearchPageCollectionData );
 		
 		/**
 		 * Signal dispatched when search of a specific page/user has loaded. 
 		 * Dispatches a <code>FacebookFeedCollectionData</code> as a parameter. 
 		 */		
-		public var pageSearched : Signal = new Signal( FacebookFeedCollectionData );
+		public var pageSearched : ISignalOwner = new Signal( FacebookFeedCollectionData );
 		
 		/**
 		 * Signal dispatched when the events search call has loaded. Dispatches 
 		 * a <code>FacebookEventCollectionData</code> as a parameter.  
 		 */		
-		public var eventsSearched : Signal = new Signal( FacebookEventCollectionData );
+		public var eventsSearched : ISignalOwner = new Signal( FacebookEventCollectionData );
 		
 		/**
 		 * Signal dispatched when the groups search call has loaded. Dispatches 
 		 * a <code>FacebookSearchGroupCollectionData</code> as a parameter.  
 		 */		
-		public var groupsSearched : Signal = new Signal( FacebookSearchGroupCollectionData );
+		public var groupsSearched : ISignalOwner = new Signal( FacebookSearchGroupCollectionData );
 		
 		//---------------------------------------------------------------------
 		//

@@ -13,6 +13,7 @@ package dareville.api.facebook.services.albums
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 	
 	/**
@@ -35,19 +36,19 @@ package dareville.api.facebook.services.albums
 		 * Signal dispatched when the albums call has loaded. Dispatches a
 		 * <code>FacebookAlbumCollectionData</code> as a parameter.
 		 */		
-		public var albumsLoaded : Signal = new Signal( FacebookAlbumCollectionData );
+		public var albumsLoaded : ISignalOwner = new Signal( FacebookAlbumCollectionData );
 		
 		/**
 		 * Signal dispatched when the album call has loaded. Dispatches a
 		 * <code>FacebookAlbumData</code> as a parameter.
 		 */		
-		public var albumLoaded : Signal = new Signal( FacebookAlbumData );
+		public var albumLoaded : ISignalOwner = new Signal( FacebookAlbumData );
 		
 		/**
 		 * Signal dispatched when the create album call has completed. 
 		 * Dispatches a <code>String</code> as a parameter.
 		 */		
-		public var albumCreated : Signal = new Signal( String );
+		public var albumCreated : ISignalOwner = new Signal( String );
 		
 		//---------------------------------------------------------------------
 		//

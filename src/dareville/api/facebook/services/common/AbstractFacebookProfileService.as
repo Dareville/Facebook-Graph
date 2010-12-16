@@ -15,6 +15,7 @@ package dareville.api.facebook.services.common
 	import flash.net.URLVariables;
 	import flash.utils.ByteArray;
 	
+	import org.osflash.signals.ISignalOwner;
 	import org.osflash.signals.Signal;
 
 	/**
@@ -37,23 +38,23 @@ package dareville.api.facebook.services.common
 		/**
 		 * Signal dispatched when a profile has loaded.
 		 */		
-		public var profileLoaded :Signal = getProfileLoadedSignal();
+		public var profileLoaded : ISignalOwner = getProfileLoadedSignal();
 		
 		/**
 		 * Signal dispatched when a profile feed has loaded.
 		 */		
-		public var profileFeedLoaded :Signal = getProfileFeedLoadedSignal();
+		public var profileFeedLoaded : ISignalOwner = getProfileFeedLoadedSignal();
 		
 		/**
 		 * Signal dispatched when a profile photo has loaded.
 		 */		
-		public var profilePhotoLoaded :Signal = getProfilePhotoLoadedSignal();
+		public var profilePhotoLoaded : ISignalOwner = getProfilePhotoLoadedSignal();
 		
 		/**
 		 * Signal dispatched when a wall post message or link is created. 
 		 * Dispatches a <code>String</code> as a parameter. 
 		 */		
-		public var wallPostCreated : Signal = new Signal( String );
+		public var wallPostCreated : ISignalOwner = new Signal( String );
 		
 		//---------------------------------------------------------------------
 		//
@@ -238,7 +239,7 @@ function onWallPostCreated( id : String ):void
 		 * 
 		 * @return Signal 
 		 */		
-		protected function getProfileLoadedSignal() : Signal
+		protected function getProfileLoadedSignal() : ISignalOwner
 		{
 			return new Signal( Object );
 		}
@@ -249,7 +250,7 @@ function onWallPostCreated( id : String ):void
 		 * 
 		 * @return Signal 
 		 */	
-		protected function getProfileFeedLoadedSignal() : Signal
+		protected function getProfileFeedLoadedSignal() : ISignalOwner
 		{
 			return new Signal( FacebookFeedCollectionData );
 		}
@@ -260,7 +261,7 @@ function onWallPostCreated( id : String ):void
 		 * 
 		 * @return Signal 
 		 */	
-		protected function getProfilePhotoLoadedSignal() : Signal
+		protected function getProfilePhotoLoadedSignal() : ISignalOwner
 		{
 			return new Signal( DisplayObject );
 		}
