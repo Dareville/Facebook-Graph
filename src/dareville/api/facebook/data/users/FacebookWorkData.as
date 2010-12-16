@@ -1,7 +1,8 @@
 package dareville.api.facebook.data.users
 {
-	import dareville.api.facebook.data.common.FacebookIdentificationData;
 	import dareville.api.facebook.data.common.FacebookBaseData;
+	import dareville.api.facebook.data.common.FacebookIdentificationCollectionData;
+	import dareville.api.facebook.data.common.FacebookIdentificationData;
 	
 	/**
 	 * The <code>FacebookWorkData</code> class is a value object representing 
@@ -17,6 +18,8 @@ package dareville.api.facebook.data.users
 	{
 		private var _employer : FacebookIdentificationData;
 		private var _position : FacebookIdentificationData;
+		
+		private var _with : FacebookIdentificationCollectionData;
 		
 		private var _start_date : Date;
 		private var _end_date : Date;
@@ -60,6 +63,11 @@ package dareville.api.facebook.data.users
 			if( data.hasOwnProperty( "position" ) )
 			{
 				_position = new FacebookIdentificationData( data.position );
+			}
+			
+			if( data.hasOwnProperty( "with" ) )
+			{	
+				_with = new FacebookIdentificationCollectionData( data["with"] );
 			}
 			
 			if( data.hasOwnProperty( "start_date" ) )
@@ -128,5 +136,17 @@ package dareville.api.facebook.data.users
 		{
 			return data.description;
 		}
+
+		/**
+		 * With. Property name changed to <code>workedWith</code> because
+		 * <code>with</code> is a reserved ActionScript keyword.
+		 * 
+		 * @return String 
+		 */	
+		public function get workedWith():FacebookIdentificationCollectionData
+		{
+			return _with;
+		}
+
 	}
 }

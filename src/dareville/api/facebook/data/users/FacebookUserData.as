@@ -67,9 +67,9 @@ package dareville.api.facebook.data.users
 				_location = new FacebookIdentificationData( data.location );
 			}
 			
+			_work = new Array();
 			if( data.hasOwnProperty( "work" ) )
 			{	
-				_work = new Array();
 				var work : Array = data.work;
 				var work_len : int = work.length;
 				for( var i : int = 0; i < work_len; i++ )
@@ -79,9 +79,9 @@ package dareville.api.facebook.data.users
 				}
 			}
 			
+			_education = new Array();
 			if( data.hasOwnProperty( "education" ) )
 			{	
-				_education = new Array();
 				var education : Array = data.education;
 				var education_len : int = education.length;
 				for( i = 0; i < education_len; i++ )
