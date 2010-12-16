@@ -38,6 +38,13 @@ package dareville.api.facebook.services.common
 		public var errored : ISignalOwner = new Signal( String );
 		
 		/**
+		 * Signal dispatched when a service has loaded multiple IDs via the 
+		 * <code>callMultiple</code> method. Dispatches an 
+		 * <code>Object</code> as a parameter.
+		 */		
+		public var multipleLoaded : ISignalOwner = new Signal( Object );
+		
+		/**
 		 * Signal dispatched when a service has deleted an item. Dispatches a
 		 * <code>Boolean</code> as a parameter.
 		 */		
@@ -78,41 +85,87 @@ package dareville.api.facebook.services.common
 			method : String = null,
 			api_path : String = FacebookConstants.API_SECURE_PATH,
 			metadata : Boolean = true ) : Boolean
-		{
-			if( access_token != null )
+		{	
+			// If no data is provided, create a new instance and assign
+			// access token
+			data = data || new URLVariables();
+			data.metadata = ( metadata ) ? 1 : 0;
+			if( access_token && 
+				access_token.length > 1 )
 			{
-				// If no data is provided, create a new instance and assign
-				// access token
-				data = data || new URLVariables();
-				data.metadata = ( metadata ) ? 1 : 0;
-				if( access_token.length > 1 )
-				{
-					data.access_token = access_token;
-				}
-				
-				// If no method is provided, set to the default GET request method
-				method = method || URLRequestMethod.GET;
-				
-				// Create the URL and the request
-				var url : String = api_path + path;
-				var request : URLRequest = new URLRequest( url );
-				request.data = data;
-				request.method = method;
-				
-				// Load the request
-				loader.load( request );
-				
-				return true;
+				data.access_token = access_token;
 			}
-			return false;
+			
+			// If no method is provided, set to the default GET request method
+			method = method || URLRequestMethod.GET;
+			
+			// Create the URL and the request
+			var url : String = api_path;
+			if( path )
+			{
+				url += path;
+			}
+			
+			var request : URLRequest = new URLRequest( url );
+			request.data = data;
+			request.method = method;
+			
+			// Load the request
+			loader.load( request );
+			return true;
 		}
+		
+		/**
+		 * Calls multiple IDs at the same time. Returns the data as an 
+		 * unformatted object.
+		 * 
+		 * <p>If the request succeeds, a <code>multipleLoaded</code> Signal is 
+		 * dispatched containing an <code>Object</code>.</p>
+		 * 
+		 * @param access_token The sessions access token
+		 * @param ids Facebook IDs the request
+		 *
+		 * @return URLLoader
+		 * 
+		 * @example This example retrieves 2 IDs from Facebook in the same 
+		 * request. The listener method then formats one of the IDs to 
+		 * <code>FacebookUserData</code>
+		 * <listing version="3.0">
+var service : FacebookUserService = new FacebookUserService();
+service.multipleLoaded.addOnce( onMultipleLoaded );
+service.callMultiple( access_token, ["btaylor","cocacola"] );
+function onMultipleLoaded( vo : Object ):void
+{
+	var user : FacebookUserData = new FacebookUserData( vo.btaylor );
+}
+</listing>
+		 */		
+		public function callMultiple(
+			access_token : String,
+			ids : Array ) : URLLoader
+		{
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onCallMultipleIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onCallMultipleComplete, false, 0, true );
+			
+			var data : URLVariables = new URLVariables();
+			if( ids )
+			{
+				data.ids = ids.join( "," );
+			}
+			
+			// Call the service
+			call( loader, "", access_token, data );
+			return loader;
+		}	
 		
 		/**
 		 * Deletes data asynchronously as long as the logged in user has access
 		 * to delete the specified item.
 		 * 
 		 * <p>If the request succeeds, a <code>deleted</code> Signal is 
-		 * dispatched containing an <code>Boolean</code> object.</p>
+		 * dispatched containing a <code>Boolean</code> object.</p>
 		 * 
 		 * @param access_token Facebook access token
 		 * @param item Item ID to delete
@@ -159,7 +212,6 @@ package dareville.api.facebook.services.common
 		{
 			// Attempt to decode the JSON data and create the value object
 			var json_data : Object;
-			json_data = JSON.decode( data );
 			try
 			{
 				json_data = JSON.decode( data );
@@ -184,7 +236,7 @@ package dareville.api.facebook.services.common
 		 * 
 		 * @param event <code>Event.COMPLETE</code> 
 		 */		
-		private function onDeleteComplete( event : Event ) : void
+		protected function onDeleteComplete( event : Event ) : void
 		{
 			// Get the loader and remove any event listeners first
 			var loader : URLLoader = event.target as URLLoader;
@@ -204,12 +256,51 @@ package dareville.api.facebook.services.common
 		 * 
 		 * @param event <code>IOErrorEvent.IO_ERROR</code> 
 		 */	
-		private function onDeleteIOError( event : IOErrorEvent ) : void
+		protected function onDeleteIOError( event : IOErrorEvent ) : void
 		{
 			// Rmove event listeners
 			var loader : URLLoader = event.target as URLLoader;
 			loader.removeEventListener( IOErrorEvent.IO_ERROR, onDeleteIOError );
 			loader.removeEventListener( Event.COMPLETE, onDeleteComplete );
+			
+			errored.dispatch( event.text );
+			
+			// NULL the loader
+			loader = null;
+		}
+		
+		/**
+		 * @private
+		 * Callback for when the multiple requests call completes
+		 * 
+		 * @param event <code>Event.COMPLETE</code> 
+		 */
+		protected function onCallMultipleComplete( event : Event ) : void
+		{
+			// Rmove event listeners
+			var loader : URLLoader = event.target as URLLoader;
+			loader.removeEventListener( IOErrorEvent.IO_ERROR, onCallMultipleIOError );
+			loader.removeEventListener( Event.COMPLETE, onCallMultipleComplete );
+			
+			var json_data : Object = decodeData( loader.data );
+			multipleLoaded.dispatch( json_data );
+			
+			// NULL the loader
+			loader = null;
+		}
+		
+		/**
+		 * @private
+		 * Callback for when the multiple requests IO errors
+		 * 
+		 * @param event <code>IOErrorEvent.IO_ERROR</code> 
+		 */
+		protected function onCallMultipleIOError( event : IOErrorEvent ) : void
+		{
+			// Rmove event listeners
+			var loader : URLLoader = event.target as URLLoader;
+			loader.removeEventListener( IOErrorEvent.IO_ERROR, onCallMultipleIOError );
+			loader.removeEventListener( Event.COMPLETE, onCallMultipleComplete );
 			
 			errored.dispatch( event.text );
 			
