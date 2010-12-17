@@ -3,6 +3,7 @@ package dareville.api.facebook.services.photos
 	import dareville.api.facebook.FacebookConstants;
 	import dareville.api.facebook.data.photos.FacebookPhotoCollectionData;
 	import dareville.api.facebook.data.photos.FacebookPhotoCreateData;
+	import dareville.api.facebook.data.photos.FacebookPhotoData;
 	import dareville.api.facebook.services.common.AbstractFacebookService;
 	
 	import flash.events.Event;
@@ -38,6 +39,12 @@ package dareville.api.facebook.services.photos
 		public var photosLoaded : ISignalOwner = new Signal( FacebookPhotoCollectionData );
 		
 		/**
+		 * Signal dispatched when the photo call has loaded. Dispatches a
+		 * <code>FacebookPhotoData</code> as a parameter. 
+		 */		
+		public var photoLoaded : ISignalOwner = new Signal( FacebookPhotoData );
+		
+		/**
 		 * Signal dispatched when the photo created call has completed. 
 		 * Dispatches a <code>String</code> as a parameter. 
 		 */		
@@ -50,7 +57,7 @@ package dareville.api.facebook.services.photos
 		//---------------------------------------------------------------------
 		
 		/**
-		 * Retrieves a photos from a user/page/album/etc.
+		 * Retrieves photos from a user/page/album/etc.
 		 * 
 		 * <p>If the request succeeds, the <code>photosLoaded</code> Signal is 
 		 * dispatched containing an <code>FacebookPhotoCollectionData</code> 
@@ -63,15 +70,14 @@ package dareville.api.facebook.services.photos
 		 * 
 		 * @example This example retrieves the photos of the current logged 
 		 * in user:
-		 <listing version="3.0">
-		 var service : FacebookPhotoService = new FacebookPhotoService();
-		 service.photosLoaded.addOnce( onPhotosLoad );
-		 service.getPhotos( access_token );
-		 
-		 function onPhotosLoad( vo : FacebookPhotoCollectionData ):void
-		 {
-		 service.photosLoaded.removeAll();
-		 }</listing>
+ <listing version="3.0">
+ var service : FacebookPhotoService = new FacebookPhotoService();
+ service.photosLoaded.addOnce( onPhotosLoad );
+ service.getPhotos( access_token );
+ function onPhotosLoad( vo : FacebookPhotoCollectionData ):void
+ {
+ 	service.photosLoaded.removeAll();
+ }</listing>
 		 */ 	
 		public function getPhotos( 
 			access_token : String, 
@@ -84,6 +90,43 @@ package dareville.api.facebook.services.photos
 			
 			// Call the service
 			call( loader, page_id + "/" + FacebookConstants.CONNECTION_PHOTOS, access_token );
+			return loader;
+		}
+		
+		/**
+		 * Retrieves photo data by it's ID value
+		 * 
+		 * <p>If the request succeeds, the <code>photoLoaded</code> Signal is 
+		 * dispatched containing an <code>FacebookPhotoData</code> 
+		 * instance.</p>
+		 * 
+		 * @param access_token Facebook access token
+		 * @param photo_id Photo ID to request
+		 * 
+		 * @return URLLoader Loader 
+		 * 
+		 * @example This example retrieves a photo by its ID:
+<listing version="3.0">
+var service : FacebookPhotoService = new FacebookPhotoService();
+service.photoLoaded.addOnce( onPhotosLoad );
+service.getPhoto( access_token, SOME_PHOTO_ID );
+function onPhotoLoad( vo : FacebookPhotoData ):void
+{
+	service.photoLoaded.removeAll();
+}
+</listing>
+		 */ 	
+		public function getPhoto( 
+			access_token : String, 
+			photo_id : String ) : URLLoader
+		{
+			var loader : URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onGetPhotoLoadIOError, false, 0, true );
+			loader.addEventListener( Event.COMPLETE, onGetPhotoLoadComplete, false, 0, true );
+			
+			// Call the service
+			call( loader, photo_id, access_token );
 			return loader;
 		}
 		
@@ -101,22 +144,23 @@ package dareville.api.facebook.services.photos
 		 * 
 		 * @example This example posts a screen capture of the stage with a 
 		 * photo caption:
-		 <listing version="3.0">
-		 var bmd : BitmapData = new BitmapData( 300, 500 );
-		 bmd.draw( this );
-		 
-		 var jpg : JPGEncoder = new JPGEncoder( 85 );
-		 var source : ByteArray = jpg.encode( bmd );
-		 
-		 var photo : FacebookPhotoCreateData = new FacebookPhotoCreateData( "Photo caption", source );
-		 var service : FacebookPhotoService = new FacebookPhotoService();
-		 service.photoCreated.addOnce( onPhotoCreated );
-		 service.createPhoto( access_token, photo );
-		 
-		 function onPhotoCreated( id : String ):void
-		 {
-		 service.photoCreated.removeAll();
-		 }</listing>
+<listing version="3.0">
+var bmd : BitmapData = new BitmapData( 300, 500 );
+bmd.draw( this );
+ 
+var jpg : JPGEncoder = new JPGEncoder( 85 );
+var source : ByteArray = jpg.encode( bmd );
+
+var photo : FacebookPhotoCreateData = new FacebookPhotoCreateData( "Photo caption", source );
+var service : FacebookPhotoService = new FacebookPhotoService();
+service.photoCreated.addOnce( onPhotoCreated );
+service.createPhoto( access_token, photo );
+
+function onPhotoCreated( id : String ):void
+{
+	service.photoCreated.removeAll();
+}
+</listing>
 		 */ 
 		public function createPhoto(
 			access_token : String,
@@ -183,6 +227,48 @@ package dareville.api.facebook.services.photos
 			var loader : URLLoader = event.target as URLLoader;
 			loader.removeEventListener( IOErrorEvent.IO_ERROR, onGetPhotosLoadIOError );
 			loader.removeEventListener( Event.COMPLETE, onGetPhotosLoadComplete );
+			
+			errored.dispatch( event.text );
+			
+			// NULL the loader
+			loader = null;
+		}
+		
+		/**
+		 * @private
+		 * Callback for when the photo load completes
+		 * 
+		 * @param event <code>Event.COMPLETE</code> 
+		 */		
+		private function onGetPhotoLoadComplete(event:Event):void
+		{
+			// Remove event listeners
+			var loader : URLLoader = event.target as URLLoader;
+			loader.removeEventListener( IOErrorEvent.IO_ERROR, onGetPhotoLoadIOError );
+			loader.removeEventListener( Event.COMPLETE, onGetPhotoLoadComplete );
+			
+			// Decode the JSON data
+			var json_data : Object = decodeData( loader.data );
+			
+			var vo : FacebookPhotoData = new FacebookPhotoData( json_data );			
+			photoLoaded.dispatch( vo );
+			
+			// NULL the loader
+			loader = null;
+		}
+		
+		/**
+		 * @private
+		 * Callback for when the photo IO errors
+		 * 
+		 * @param event <code>IOErrorEvent.IO_ERROR</code> 
+		 */	
+		private function onGetPhotoLoadIOError( event : IOErrorEvent ) : void
+		{
+			// Rmove event listeners
+			var loader : URLLoader = event.target as URLLoader;
+			loader.removeEventListener( IOErrorEvent.IO_ERROR, onGetPhotoLoadIOError );
+			loader.removeEventListener( Event.COMPLETE, onGetPhotoLoadComplete );
 			
 			errored.dispatch( event.text );
 			
