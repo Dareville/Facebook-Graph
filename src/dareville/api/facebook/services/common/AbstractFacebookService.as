@@ -84,12 +84,16 @@ package dareville.api.facebook.services.common
 			data : URLVariables = null,
 			method : String = null,
 			api_path : String = FacebookConstants.API_SECURE_PATH,
-			metadata : Boolean = true ) : Boolean
+			metadata : Boolean = false ) : Boolean
 		{	
 			// If no data is provided, create a new instance and assign
 			// access token
 			data = data || new URLVariables();
-			data.metadata = ( metadata ) ? 1 : 0;
+			if( metadata )
+			{
+				data.metadata = 1;
+			}
+			
 			if( access_token && 
 				access_token.length > 1 )
 			{

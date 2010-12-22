@@ -136,7 +136,7 @@ package dareville.api.facebook.data.users
 		{
 			return data.description;
 		}
-
+		
 		/**
 		 * With. Property name changed to <code>workedWith</code> because
 		 * <code>with</code> is a reserved ActionScript keyword.
@@ -147,6 +147,5 @@ package dareville.api.facebook.data.users
 		{
 			return _with;
 		}
-
 	}
 }

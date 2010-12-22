@@ -1,5 +1,7 @@
 package dareville.api.facebook.data.common
 {
+	import com.adobe.serialization.json.JSON;
+	
 	import dareville.api.facebook.data.interfaces.IFacebookBaseData;
 
 	/**
@@ -132,6 +134,17 @@ package dareville.api.facebook.data.common
 		public function get metadata():FacebookMetadataData
 		{
 			return _metadata;
+		}
+		
+		/**
+		 * Returns a string version of the encoded JSON object data from 
+		 * Facebook.
+		 * 
+		 * @return String 
+		 */		
+		public function toString():String
+		{
+			return JSON.encode( data );
 		}
 	}
 }

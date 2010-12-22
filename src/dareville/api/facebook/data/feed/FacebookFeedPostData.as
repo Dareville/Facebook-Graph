@@ -1,7 +1,7 @@
 package dareville.api.facebook.data.feed
 {
-	import dareville.api.facebook.data.common.FacebookActionCollectionData;
 	import dareville.api.facebook.data.comments.FacebookCommentCollectionData;
+	import dareville.api.facebook.data.common.FacebookActionCollectionData;
 	import dareville.api.facebook.data.common.FacebookIdentificationCollectionData;
 	import dareville.api.facebook.data.common.FacebookIdentificationData;
 	import dareville.api.facebook.data.common.FacebookPrivacyData;
@@ -30,6 +30,7 @@ package dareville.api.facebook.data.feed
 		
 		private var _comments : FacebookCommentCollectionData;
 		
+		private var _attribution : String;
 		private var _privacy : FacebookPrivacyData;
 		
 		//---------------------------------------------------------------------
@@ -200,6 +201,16 @@ package dareville.api.facebook.data.feed
 		public function get privacy():FacebookPrivacyData
 		{
 			return _privacy;
+		}
+		
+		/**
+		 * Attribution value of the post
+		 * 
+		 * @return String 
+		 */		
+		public function get attribution():String
+		{
+			return _attribution;
 		}
 	}
 }

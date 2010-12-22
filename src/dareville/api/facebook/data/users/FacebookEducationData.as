@@ -1,6 +1,7 @@
 package dareville.api.facebook.data.users
 {
 	import dareville.api.facebook.data.common.FacebookBaseData;
+	import dareville.api.facebook.data.common.FacebookIdentificationCollectionData;
 	import dareville.api.facebook.data.common.FacebookIdentificationData;
 	
 	/**
@@ -17,6 +18,8 @@ package dareville.api.facebook.data.users
 	{
 		private var _school : FacebookIdentificationData;
 		private var _year : FacebookIdentificationData;
+		
+		private var _with : FacebookIdentificationCollectionData;
 		
 		private var _concentration : Array;
 		
@@ -69,6 +72,11 @@ package dareville.api.facebook.data.users
 				}
 			}
 			
+			if( data.hasOwnProperty( "with" ) )
+			{	
+				_with = new FacebookIdentificationCollectionData( data["with"] );
+			}
+			
 			if( data.hasOwnProperty( "year" ) )
 			{
 				_year = new FacebookIdentificationData( data.year );
@@ -109,6 +117,17 @@ package dareville.api.facebook.data.users
 		public function get concentration():Array
 		{
 			return _concentration;
+		}
+		
+		/**
+		 * With. Property name changed to <code>workedWith</code> because
+		 * <code>with</code> is a reserved ActionScript keyword.
+		 * 
+		 * @return String 
+		 */	
+		public function get workedWith():FacebookIdentificationCollectionData
+		{
+			return _with;
 		}
 	}
 }
